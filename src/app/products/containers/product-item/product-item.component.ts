@@ -11,7 +11,7 @@ import { ToppingsService } from '../../services/toppings.service';
   selector: 'product-item',
   styleUrls: ['product-item.component.scss'],
   template: `
-    <div 
+    <div
       class="product-item">
       <pizza-form
         [pizza]="pizza"
@@ -37,17 +37,12 @@ export class ProductItemComponent implements OnInit {
     private toppingsService: ToppingsService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.pizzaService.getPizzas().subscribe(pizzas => {
       const param = this.route.snapshot.params.id;
-      let pizza;
-      if (param === 'new') {
-        pizza = {};
-      } else {
-        pizza = pizzas.find(pizza => pizza.id == parseInt(param, 10));
-      }
+      const pizza = param === 'new' ? {} : pizzas.find(p => p.id === parseInt(param, 10));
       this.pizza = pizza;
       this.toppingsService.getToppings().subscribe(toppings => {
         this.toppings = toppings;

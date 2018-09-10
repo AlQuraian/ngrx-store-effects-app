@@ -3,14 +3,15 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
-import { reducers } from './store';
+import { reducers, effects } from './store';
 import * as fromComponents from './components';
 import * as fromContainers from './containers';
 import * as fromServices from './services';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { PizzaData } from './pizzas-data';
 
 // routes
@@ -36,7 +37,8 @@ export const ROUTES: Routes = [
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(PizzaData),
     RouterModule.forChild(ROUTES),
-    StoreModule.forFeature('products', reducers)
+    StoreModule.forFeature('products', reducers),
+    EffectsModule.forFeature(effects)
   ],
   providers: [...fromServices.services],
   declarations: [...fromContainers.containers, ...fromComponents.components],

@@ -3,8 +3,8 @@ import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/s
 import * as fromPizzas from './pizzas.reducer';
 
 export interface ProductsState {
-  pizzas: fromPizzas.PizzaState
-};
+  pizzas: fromPizzas.PizzaState;
+}
 
 export const reducers: ActionReducerMap<ProductsState> = {
   pizzas: fromPizzas.reducer
@@ -18,6 +18,21 @@ export const getPizzaState = createSelector(
   (state: ProductsState) => state.pizzas
 );
 
-export const getAllPizzas = createSelector(getPizzaState, fromPizzas.getPizzas);
-export const getPizzasLoading = createSelector(getPizzaState, fromPizzas.getPizzasLoading);
-export const getPizzasLoaded = createSelector(getPizzaState, fromPizzas.getPizzasLoaded);
+export const getPizzasEntities = createSelector(
+  getPizzaState,
+  fromPizzas.getPizzasEntities);
+
+export const getAllPizzas = createSelector(
+  getPizzasEntities,
+  entities => Object.keys(entities).map(id => entities[id])
+);
+
+export const getPizzasLoading = createSelector(
+  getPizzaState,
+  fromPizzas.getPizzasLoading
+);
+
+export const getPizzasLoaded = createSelector(
+  getPizzaState,
+  fromPizzas.getPizzasLoaded
+);
